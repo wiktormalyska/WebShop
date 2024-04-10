@@ -13,3 +13,11 @@ services:
       - "8080:8080"
     volumes:
       - ./backend:/app
+  database:
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=postgres
