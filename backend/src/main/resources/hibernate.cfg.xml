@@ -4,23 +4,23 @@
 <hibernate-configuration>
     <session-factory>
 
-        <property name = "hibernate.dialect">
+        <property name="hibernate.dialect">
             org.hibernate.dialect.PostgreSQLDialect
         </property>
 
-        <property name = "hibernate.connection.driver_class">
+        <property name="hibernate.connection.driver_class">
             org.postgresql.Driver
         </property>
 
-        <property name = "hibernate.connection.url">
+        <property name="hibernate.connection.url">
             jdbc:postgresql://localhost:5432/postgres
         </property>
 
-        <property name = "hibernate.connection.username">
+        <property name="hibernate.connection.username">
             postgres
         </property>
 
-        <property name = "hibernate.connection.password">
+        <property name="hibernate.connection.password">
             postgres
         </property>
 
@@ -29,6 +29,6 @@
         <property name="hbm2ddl.auto">validate</property>
         <property name="hibernate.connection.pool_size">10</property>
 
-        <mapping class="com.wiktormalyska.backend.dao.hibernate.Product"/>
+        <mapping class="com.wiktormalyska.backend.model.Item"/>
     </session-factory>
 </hibernate-configuration>

@@ -1,12 +1,12 @@
 package com.wiktormalyska.backend.dao;
 
-import com.wiktormalyska.backend.dao.hibernate.Product;
+import com.wiktormalyska.backend.model.Item;
 
 import java.util.Collection;
 
 public interface IItemRepository {
-    void addItem(Product product);
+    void addItem(Item item);
     void removeItem(int id);
-    Collection<Product> getItems();
-    Product getItem(int id);
+    Collection<Item> getItems();
+    Item getItem(int id);
 }

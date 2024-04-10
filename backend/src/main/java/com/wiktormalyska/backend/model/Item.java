@@ -1,16 +1,13 @@
-package com.wiktormalyska.backend.dao.hibernate;
+package com.wiktormalyska.backend.model;
 
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import jakarta.persistence.*;
 
 @Table(name = "items")
 @Entity
-public class Product {
+public class Item {
     @Id
     @GeneratedValue
     @Getter
@@ -25,9 +22,9 @@ public class Product {
     @Setter
     private String description;
 
-    public Product() {}
+    public Item() {}
 
-    public Product(String name, int price, String description) {
+    public Item(String name, int price, String description) {
         this.name = name;
         this.price = price;
         this.description = description;

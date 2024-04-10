@@ -1,5 +1,6 @@
 package com.wiktormalyska.backend.dao.hibernate;
 
+import com.wiktormalyska.backend.model.Item;
 import com.wiktormalyska.backend.dao.IItemRepository;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -22,12 +23,12 @@ public class ItemDAO implements IItemRepository {
         return instance;
     }
     @Override
-    public void addItem(Product product) {
+    public void addItem(Item item) {
         Session session = sessionFactory.openSession();
         Transaction transaction = null;
         try {
             transaction = session.beginTransaction();
-            session.persist(product);
+            session.persist(item);
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {
@@ -45,8 +46,8 @@ public class ItemDAO implements IItemRepository {
         Transaction transaction = null;
         try {
             transaction = session.beginTransaction();
-            Product product = session.get(Product.class, id);
-            session.remove(product);
+            Item item = session.get(Item.class, id);
+            session.remove(item);
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {
@@ -59,13 +60,13 @@ public class ItemDAO implements IItemRepository {
     }
 
     @Override
-    public Collection<Product> getItems() {
+    public Collection<Item> getItems() {
         Session session = sessionFactory.openSession();
         Transaction transaction = null;
-        Collection<Product> products;
+        Collection<Item> items;
         try {
             transaction = session.beginTransaction();
-            products = session.createQuery("from Product", Product.class).getResultList();
+            items = session.createQuery("FROM Item", Item.class).getResultList();
             transaction.commit();
         } catch (RuntimeException e) {
             if(transaction != null) transaction.rollback();
@@ -73,20 +74,20 @@ public class ItemDAO implements IItemRepository {
         } finally {
             session.close();
         }
-        return products;
+        return items;
     }
 
     @Override
-    public Product getItem(int id) {
+    public Item getItem(int id) {
         Session session = sessionFactory.openSession();
-        Product product = null;
+        Item item = null;
         try {
-            product = session.get(Product.class, id);
+            item = session.get(Item.class, id);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             session.close();
         }
-        return product;
+        return item;
     }
 }
