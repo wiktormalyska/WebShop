@@ -1,5 +1,6 @@
 services:
   frontend:
+    container_name: frontend-react
     build: ./frontend
     ports:
       - "8000:8000"
@@ -8,12 +9,14 @@ services:
     environment:
       - REACT_APP_API_URL=http://localhost:8080
   backend:
+    container_name: backend-spring
     build: ./backend
     ports:
       - "8080:8080"
     volumes:
       - ./backend:/app
   database:
+    container_name: postgres
     image: postgres
     ports:
       - "5432:5432"
