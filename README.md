@@ -1,4 +1,4 @@
-# Webshop
+# Webshop (W.I.P.)
 
 ## Description & Features
 - Web application with seperated frontend and backend
