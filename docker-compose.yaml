@@ -3,7 +3,7 @@ services:
     container_name: frontend-react
     build: ./frontend
     ports:
-      - "3000:8000"
+      - "8080:8080"
     environment:
       - REACT_APP_API_URL=http://backend:8080
     networks:
@@ -12,7 +12,7 @@ services:
     container_name: backend-spring
     build: ./backend
     ports:
-      - "8080:8080"
+      - "5000:5000"
     networks:
       - network
   database:
