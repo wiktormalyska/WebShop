@@ -9,7 +9,7 @@ import jakarta.persistence.*;
 @Entity
 public class Item {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter
     private int id;
     @Getter
