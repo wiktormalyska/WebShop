@@ -3,6 +3,14 @@ services:
   # Frontend
   frontend:
     container_name: frontend-react
+    build: ./frontend
+    ports:
+      - "8080:8080"
+      - "8081:8081"
+    networks:
+      - network
+    volumes:
+      - ./frontend:/app
 
   # Backend
   backend:
@@ -12,6 +20,8 @@ services:
       - "5000:5000"
     networks:
       - network
+    volumes:
+      - ./backend:/app
 
   # Database
   database:
