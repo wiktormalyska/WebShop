@@ -1,4 +1,4 @@
-package com.wiktormalyska.backend;
+package com.wiktormalyska.backend.hibernate;
 
 import com.wiktormalyska.backend.dao.hibernate.ItemDAO;
 import com.wiktormalyska.backend.model.Item;
@@ -10,7 +10,8 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.Collection;
 import java.util.stream.Stream;
 
-public class HibernateTest {
+public class ItemsTests {
+
     private SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
     private ItemDAO itemRepo = ItemDAO.getInstance(sessionFactory);
 
@@ -21,9 +22,6 @@ public class HibernateTest {
                 new Item(" ", Integer.MAX_VALUE, null),
                 new Item("Item 4", 99, "Item description 4")
         );
-    }
-
-    public HibernateTest() {
     }
 
     @ParameterizedTest
@@ -52,6 +50,5 @@ public class HibernateTest {
         removeItemTest(item);
         assert itemRepo.getItem(item.getId()) == null;
     }
-
 
 }
