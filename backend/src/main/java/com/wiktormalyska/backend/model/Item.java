@@ -5,20 +5,17 @@
 
     import jakarta.persistence.*;
 
+    @Getter
     @Table(name = "items")
     @Entity
     public class Item {
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
-        @Getter
         private int id;
-        @Getter
         @Setter
         private String name;
-        @Getter
         @Setter
         private int price;
-        @Getter
         @Setter
         private String description;
 
@@ -40,5 +37,11 @@
                     '}';
         }
 
-
+        @Override
+        public boolean equals(Object obj) {
+            if (obj instanceof Item item) {
+                return item.id == this.id && item.name.equals(this.name) && item.price == this.price && item.description.equals(this.description);
+            }
+            return super.equals(obj);
+        }
     }
