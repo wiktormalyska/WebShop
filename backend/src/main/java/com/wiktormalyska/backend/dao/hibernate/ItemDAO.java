@@ -1,7 +1,7 @@
 package com.wiktormalyska.backend.dao.hibernate;
 
-import com.wiktormalyska.backend.model.Item;
 import com.wiktormalyska.backend.dao.IItemRepository;
+import com.wiktormalyska.backend.model.Item;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -22,72 +22,42 @@ public class ItemDAO implements IItemRepository {
         }
         return instance;
     }
+
     @Override
     public void addItem(Item item) {
-        Session session = sessionFactory.openSession();
-        Transaction transaction = null;
-        try {
-            transaction = session.beginTransaction();
-            session.persist(item);
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
+        try (Session session = sessionFactory.openSession()) {
+            Transaction transaction = session.beginTransaction();
+            // if item has no id, persist it, otherwise merge it
+            if (item.getId() == 0) {
+                session.persist(item);
+            } else {
+                session.merge(item);
             }
-            e.printStackTrace();
-        } finally {
-            session.close();
+            transaction.commit();
         }
     }
 
     @Override
     public void removeItem(int id) {
-        Session session = sessionFactory.openSession();
-        Transaction transaction = null;
-        try {
-            transaction = session.beginTransaction();
+        try (Session session = sessionFactory.openSession()) {
+            Transaction transaction = session.beginTransaction();
             Item item = session.get(Item.class, id);
             session.remove(item);
             transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            e.printStackTrace();
-        } finally {
-            session.close();
         }
     }
 
     @Override
     public Collection<Item> getItems() {
-        Session session = sessionFactory.openSession();
-        Transaction transaction = null;
-        Collection<Item> items;
-        try {
-            transaction = session.beginTransaction();
-            items = session.createQuery("FROM Item", Item.class).getResultList();
-            transaction.commit();
-        } catch (RuntimeException e) {
-            if(transaction != null) transaction.rollback();
-            throw e;
-        } finally {
-            session.close();
+        try (Session session = sessionFactory.openSession()) {
+            return session.createQuery("FROM Item", Item.class).getResultList();
         }
-        return items;
     }
 
     @Override
     public Item getItem(int id) {
-        Session session = sessionFactory.openSession();
-        Item item = null;
-        try {
-            item = session.get(Item.class, id);
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            session.close();
+        try (Session session = sessionFactory.openSession()) {
+            return session.get(Item.class, id);
         }
-        return item;
     }
 }

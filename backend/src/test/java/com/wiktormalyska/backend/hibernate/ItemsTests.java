@@ -4,7 +4,8 @@ import com.wiktormalyska.backend.dao.hibernate.ItemDAO;
 import com.wiktormalyska.backend.model.Item;
 import com.wiktormalyska.backend.utils.HibernateUtil;
 import org.hibernate.SessionFactory;
-import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
@@ -12,6 +13,7 @@ import java.util.Collection;
 import java.util.stream.Stream;
 
 public class ItemsTests {
+    private Item lastItem;
 
     private final SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
     private final ItemDAO itemRepo = ItemDAO.getInstance(sessionFactory);
@@ -29,6 +31,7 @@ public class ItemsTests {
     @MethodSource("itemProvider")
     void addItemTest(Item item) {
         itemRepo.addItem(item);
+        lastItem = item;
         Collection<Item> items = itemRepo.getItems();
         assert items.contains(item);
     }
@@ -36,7 +39,7 @@ public class ItemsTests {
     @ParameterizedTest
     @MethodSource("itemProvider")
     void removeItemTest(Item item){
-        addItemTest(item);
+        itemRepo.addItem(item);
         itemRepo.removeItem(item.getId());
         Collection<Item> items = itemRepo.getItems();
         assert !items.contains(item);
@@ -45,17 +48,25 @@ public class ItemsTests {
     @ParameterizedTest
     @MethodSource("itemProvider")
     void getItemTest(Item item){
-        addItemTest(item);
+        itemRepo.addItem(item);
         Item itemFromDb = itemRepo.getItem(item.getId());
         assert item.equals(itemFromDb);
         removeItemTest(item);
         assert itemRepo.getItem(item.getId()) == null;
     }
 
-    @AfterAll
-    static void cleanUp(){
-        ItemDAO itemRepo = ItemDAO.getInstance(HibernateUtil.getSessionFactory());
-        itemProvider().forEach(item -> itemRepo.removeItem(item.getId()));
+    @Test
+    void getItemsTest(){
+        Collection<Item> items = itemRepo.getItems();
+        assert items != null;
+    }
+
+    @AfterEach
+    void cleanUp(){
+        if(lastItem != null){
+            itemRepo.removeItem(lastItem.getId());
+            lastItem = null;
+        }
     }
 
 }
