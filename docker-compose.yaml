@@ -1,20 +1,29 @@
 services:
+
+  # Frontend
   frontend:
     container_name: frontend-react
     build: ./frontend
     ports:
-      - "8000:8000"
-    environment:
-      - REACT_APP_API_URL=http://localhost:8080
+      - "8080:8080"
+      - "8081:8081"
     networks:
       - network
+    volumes:
+      - ./frontend:/app
+
+  # Backend
   backend:
     container_name: backend-spring
     build: ./backend
     ports:
-      - "8080:8080"
+      - "5000:5000"
     networks:
       - network
+    volumes:
+      - ./backend:/app
+
+  # Database
   database:
     container_name: postgres
     image: postgres
@@ -26,5 +35,10 @@ services:
       - POSTGRES_DB=postgres
     networks:
       - network
+    volumes:
+      - ./database:/app
 networks:
   network:
+
+volumes:
+  node_modules:

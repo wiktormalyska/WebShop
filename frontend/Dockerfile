@@ -1,9 +1,14 @@
-FROM node:21
-LABEL authors="wiktormalyska"
+FROM node:18-alpine
 
 WORKDIR /app
+
 COPY package.json .
+
 RUN npm install
+
 COPY . .
-EXPOSE 8000
-CMD ["npm", "run", "dev"]
+
+EXPOSE 8080
+EXPOSE 8081
+
+CMD [ "npm", "run", "dev" ]
