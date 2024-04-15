@@ -24,16 +24,26 @@ repositories {
 }
 
 dependencies {
+    //Spring Boot
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    //Lombok
     compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    //H2 and PostgreSQL
     runtimeOnly 'com.h2database:h2'
     runtimeOnly 'org.postgresql:postgresql'
-    annotationProcessor 'org.projectlombok:lombok'
+    //Hibernate
+    implementation 'org.hibernate:hibernate-gradle-plugin:6.0.0.Alpha6'
+    //Tests
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    implementation group: 'org.hibernate', name: 'hibernate-gradle-plugin', version: '5.6.15.Final'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.8.1'
+    testImplementation 'org.junit.platform:junit-platform-suite-api:1.10.2'
+
 }
 
-tasks.named('test') {
+test {
     useJUnitPlatform()
 }
