@@ -10,7 +10,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class BackendApplication {
 
     public static void main(String[] args) {
-        System.out.println("Items in the database:");
         SpringApplication.run(BackendApplication.class, args);
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         ItemDAO itemDAO = ItemDAO.getInstance(sessionFactory);
