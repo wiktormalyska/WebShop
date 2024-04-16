@@ -6,5 +6,6 @@ RUN gradle build --no-daemon
 FROM eclipse-temurin:21
 EXPOSE 5000
 RUN mkdir /app
-COPY --from=build /home/gradle/src/build/libs/*.jar /app/
+COPY --from=build /home/gradle/src/build/libs/*.jar /app/backend.jar
+RUN ls -la /app
 ENTRYPOINT ["java", "-jar", "/app/backend.jar"]
