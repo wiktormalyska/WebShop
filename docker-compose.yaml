@@ -11,7 +11,8 @@ services:
       - ./frontend:/app
       - node_modules:/app/node_modules
     depends_on:
-      - backend
+      backend:
+        condition: service_healthy
     networks:
         - frontend-network
 
@@ -24,12 +25,19 @@ services:
     ports:
       - 5000:5000
     volumes:
-      - ./backend:/app
+      - ./backend:/home/gradle/src
     depends_on:
-      - database
+      database:
+        condition: service_healthy
     networks:
         - backend-network
         - frontend-network
+    healthcheck:
+      test: "curl --fail --silent localhost:5000/actuator/health | grep UP || exit 1"
+      interval: 15s
+      timeout: 5s
+      retries: 4
+      start_period: 15s
 
   # Database
   database:
@@ -45,6 +53,11 @@ services:
       - ./database:/docker-entrypoint-initdb.d
     networks:
         - backend-network
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 volumes:
     node_modules:
 
