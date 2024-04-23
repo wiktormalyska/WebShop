@@ -25,7 +25,7 @@ repositories {
 
 dependencies {
     //Spring Boot
-    implementation 'org.springframework.boot:spring-boot-starter-actuator:3.2.4'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     //Lombok
@@ -35,13 +35,13 @@ dependencies {
     runtimeOnly 'com.h2database:h2'
     runtimeOnly 'org.postgresql:postgresql'
     //Hibernate
-    implementation 'org.hibernate:hibernate-gradle-plugin:6.0.0.Alpha6'
+    implementation 'org.hibernate:hibernate-core:6.4.4.Final'
     //Tests
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
-    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.8.1'
-    testImplementation 'org.junit.platform:junit-platform-suite-api:1.10.2'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+    testImplementation 'org.junit.jupiter:junit-jupiter-params'
+    testImplementation 'org.junit.platform:junit-platform-suite-api'
 
 }
 

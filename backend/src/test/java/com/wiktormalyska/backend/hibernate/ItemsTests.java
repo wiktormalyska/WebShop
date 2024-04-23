@@ -1,22 +1,22 @@
 package com.wiktormalyska.backend.hibernate;
 
-import com.wiktormalyska.backend.dao.hibernate.ItemDAO;
+import com.wiktormalyska.backend.dao.IItemRepository;
 import com.wiktormalyska.backend.model.Item;
-import com.wiktormalyska.backend.utils.HibernateUtil;
-import org.hibernate.SessionFactory;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Collection;
 import java.util.stream.Stream;
 
+@SpringBootTest
 public class ItemsTests {
     private Item lastItem;
-
-    private final SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-    private final ItemDAO itemRepo = ItemDAO.getInstance(sessionFactory);
+    @Autowired
+    private IItemRepository itemRepo;
 
     static Stream<Item> itemProvider() {
         return Stream.of(

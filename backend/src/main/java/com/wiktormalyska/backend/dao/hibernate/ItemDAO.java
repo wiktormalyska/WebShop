@@ -2,26 +2,19 @@ package com.wiktormalyska.backend.dao.hibernate;
 
 import com.wiktormalyska.backend.dao.IItemRepository;
 import com.wiktormalyska.backend.model.Item;
+import com.wiktormalyska.backend.configuration.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
 
+@Repository
 public class ItemDAO implements IItemRepository {
     private static ItemDAO instance;
-    SessionFactory sessionFactory;
-
-    private ItemDAO(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
-
-    public static ItemDAO getInstance(SessionFactory sessionFactory) {
-        if (instance == null) {
-            instance = new ItemDAO(sessionFactory);
-        }
-        return instance;
-    }
+    private final SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 
     @Override
     public void addItem(Item item) {
@@ -59,5 +52,11 @@ public class ItemDAO implements IItemRepository {
         try (Session session = sessionFactory.openSession()) {
             return session.get(Item.class, id);
         }
+    }
+    public static ItemDAO getInstance(){
+        if(instance == null){
+            instance = new ItemDAO();
+        }
+        return instance;
     }
 }
