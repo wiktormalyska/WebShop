@@ -40,7 +40,7 @@
         @Override
         public boolean equals(Object obj) {
             if (obj instanceof Item item) {
-                return item.id == this.id && item.name.equals(this.name) && item.price == this.price && item.description.equals(this.description);
+                return item.name.equals(this.name) && item.price == this.price && item.description.equals(this.description);
             }
             return super.equals(obj);
         }

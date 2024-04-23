@@ -21,7 +21,7 @@
         </property>
 
         <property name="hibernate.connection.password">
-            postgres
+
         </property>
 
         <property name="hibernate.format_sql">true</property>

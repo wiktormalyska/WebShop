@@ -21,7 +21,7 @@ services:
     container_name: backend-spring
     build: ./backend
     environment:
-      - DB_SERVER=database-postgres
+      - DB_SERVER=database
     ports:
       - 5000:5000
     volumes:
