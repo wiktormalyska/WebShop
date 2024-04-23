@@ -40,4 +40,11 @@ public class ItemService {
         itemRepository.addItem(item);
         return "item added successfully";
     }
+    public String removeItem(Item item){
+        Item checkItem = itemRepository.getItems().stream().filter(i -> i.equals(item)).findFirst().orElse(null);
+        if (checkItem == null)
+            return "item does not exist";
+        itemRepository.removeItem(item.getId());
+        return "item removed successfully";
+    }
 }

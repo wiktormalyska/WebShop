@@ -20,7 +20,6 @@ public class ItemDAO implements IItemRepository {
     public void addItem(Item item) {
         try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();
-            // if item has no id, persist it, otherwise merge it
             if (item.getId() == 0) {
                 session.persist(item);
             } else {
