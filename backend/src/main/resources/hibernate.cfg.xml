@@ -12,11 +12,13 @@
         <property name="connection.password">postgres</property>
 
         <property name="hibernate.show_sql">true</property>
-        <property name="hbm2ddl.auto">validate</property>
-        <property name="hibernate.format_sql">false</property>
+        <property name="hibernate.format_sql">true</property>
+        <property name="hibernate.hbm2ddl.auto">update</property>
         <property name="hibernate.connection.pool_size">10</property>
 
         <mapping class="com.wiktormalyska.backend.model.Item"/>
+        <mapping class="com.wiktormalyska.backend.model.User"/>
+        <mapping class="com.wiktormalyska.backend.model.Role"/>
 
     </session-factory>
 </hibernate-configuration>
