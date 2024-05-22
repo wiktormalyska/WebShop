@@ -11,4 +11,5 @@ public interface IUserRepository {
     Collection<User> getUsers();
     User getUser(int id);
     Optional<User> getUser(String username);
+
 }

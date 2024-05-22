@@ -1,5 +1,6 @@
 package com.wiktormalyska.backend.configuration;
 
+import com.wiktormalyska.backend.utils.CustomLoginSuccessHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -16,11 +17,12 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/login", "/register","/actuator/health").permitAll()
+                        .requestMatchers("/admin/**").hasAuthority("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
-                        .defaultSuccessUrl("/home", true)
+                        .successHandler(new CustomLoginSuccessHandler())
                         .permitAll()
                 )
                 .logout(logout -> logout.permitAll());

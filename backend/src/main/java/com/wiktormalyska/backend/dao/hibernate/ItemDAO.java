@@ -2,11 +2,10 @@ package com.wiktormalyska.backend.dao.hibernate;
 
 import com.wiktormalyska.backend.dao.IItemRepository;
 import com.wiktormalyska.backend.model.Item;
-import com.wiktormalyska.backend.configuration.HibernateUtil;
+import com.wiktormalyska.backend.utils.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.Collection;

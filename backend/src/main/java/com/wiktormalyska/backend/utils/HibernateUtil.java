@@ -1,4 +1,4 @@
-package com.wiktormalyska.backend.configuration;
+package com.wiktormalyska.backend.utils;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;

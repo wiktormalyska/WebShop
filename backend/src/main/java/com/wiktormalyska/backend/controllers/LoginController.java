@@ -13,6 +13,7 @@ public class LoginController {
     public String login(
             @RequestParam(value = "error", required = false) String error,
             @RequestParam(value = "logout", required = false) String logout,
+            @RequestParam(value = "message", required = false) String message,
             Model model
     ) {
         if (error != null) {
@@ -20,6 +21,9 @@ public class LoginController {
         }
         if (logout != null) {
             model.addAttribute("logoutMessage", "Pomyślnie wylogowano!");
+        }
+        if (message != null) {
+            model.addAttribute("message", message);
         }
         return "login";
     }

@@ -1,6 +1,6 @@
 package com.wiktormalyska.backend.dao.hibernate;
 
-import com.wiktormalyska.backend.configuration.HibernateUtil;
+import com.wiktormalyska.backend.utils.HibernateUtil;
 import com.wiktormalyska.backend.dao.IUserRepository;
 import com.wiktormalyska.backend.model.User;
 import org.hibernate.Session;
