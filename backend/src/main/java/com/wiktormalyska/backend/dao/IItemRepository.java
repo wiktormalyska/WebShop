@@ -9,4 +9,5 @@ public interface IItemRepository {
     void removeItem(int id);
     Collection<Item> getItems();
     Item getItem(int id);
+    void saveOrUpdate(Item item);
 }

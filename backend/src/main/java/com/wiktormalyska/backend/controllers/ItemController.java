@@ -6,9 +6,11 @@ import com.wiktormalyska.backend.model.Item;
 import com.wiktormalyska.backend.services.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/items")
@@ -31,7 +33,8 @@ public class ItemController {
         Item newItem = new Item(
                 item.getName(),
                 item.getPrice(),
-                item.getDescription()
+                item.getDescription(),
+                item.getQuantity()
         );
         switch (itemService.addItem(newItem)) {
             case "item already exists" -> {
@@ -60,6 +63,46 @@ public class ItemController {
         if (itemToRemove== null) return ResponseEntity.badRequest().body("item does not exist");
         itemService.removeItem(itemToRemove.getItem());
         return ResponseEntity.ok("successfully removed item");
+    }
+
+    @RequestMapping(path = "/add", method = RequestMethod.GET)
+    public String addItem(Model model) {
+        model.addAttribute("item", new Item());
+        return "item-form";
+    }
+
+    @RequestMapping(path = "/add", method = RequestMethod.POST)
+    public String addItem(@ModelAttribute Item item) {
+        itemService.saveOrUpdate(item);
+        return "redirect:/items";
+    }
+
+    @RequestMapping(path = {"/main", "/", "/index"}, method = RequestMethod.GET)
+    public String mainPage(Model model) {
+        model.addAttribute("items", itemService.getItems());
+        return "index";
+    }
+
+    @RequestMapping(path = "/update/{id}", method = RequestMethod.GET)
+    public String updateItem(@PathVariable int id, Model model) {
+        Item item = itemService.getItem(id).getItem();
+        if (item == null) {
+            return "redirect:/main";
+        }
+        model.addAttribute("item", item);
+        return "item-form";
+    }
+
+    @RequestMapping(path = "/update/{id}", method = RequestMethod.POST)
+    public String updateItem(@PathVariable int id, @ModelAttribute Item item) {
+        itemService.saveOrUpdate(item);
+        return "redirect:/main";
+    }
+
+    @RequestMapping(path = "/delete")
+    public String deleteItem(@RequestParam int id) {
+        itemService.delete(id);
+        return "redirect:/main";
     }
 
 }

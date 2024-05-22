@@ -4,14 +4,17 @@ import com.wiktormalyska.backend.dao.IItemRepository;
 import com.wiktormalyska.backend.dao.hibernate.ItemDAO;
 import com.wiktormalyska.backend.dto.ItemDto;
 import com.wiktormalyska.backend.model.Item;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
 
 @Service
-public class ItemService {
+public class ItemService implements IItemService {
     @Autowired
     private IItemRepository itemRepository;
 
@@ -46,5 +49,29 @@ public class ItemService {
             return "item does not exist";
         itemRepository.removeItem(item.getId());
         return "item removed successfully";
+    }
+
+    @Override
+    @Transactional
+    public void saveOrUpdate(Item item) {
+        this.itemRepository.saveOrUpdate(item);
+    }
+
+    @Override
+    @Transactional
+    public Item getById(int id) {
+        return this.itemRepository.getItem(id);
+    }
+
+    @Override
+    @Transactional
+    public Collection<Item> getAll() {
+        return this.itemRepository.getItems();
+    }
+
+    @Override
+    @Transactional
+    public void delete(int id) {
+        this.itemRepository.removeItem(id);
     }
 }

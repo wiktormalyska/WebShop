@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Dodaj książkę</title>
+</head>
+<body>
+<div>
+    <form method="post">
+        <input type="text" placeholder="Tytuł" class="input-field" th:field="*{item.title}" id="title">
+        <input type="text" placeholder="Autor" class="input-field" th:field="*{item.author}" id="author">
+        <input type="text" placeholder="Cena" class="input-field" th:field="*{item.price}" id="price">
+        <input type="text" placeholder="Ilość" class="input-field" th:field="*{item.quantity}" id="quantity">
+        <input type="submit" value="Dodaj">
+    </form>
+</div>
+</body>
+</html>

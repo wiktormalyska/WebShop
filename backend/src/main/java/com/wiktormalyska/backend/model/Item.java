@@ -1,13 +1,16 @@
     package com.wiktormalyska.backend.model;
 
-    import lombok.Getter;
-    import lombok.Setter;
+    import lombok.*;
 
     import jakarta.persistence.*;
 
     @Getter
     @Table(name = "items")
     @Entity
+    @ToString
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @EqualsAndHashCode
     public class Item {
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,30 +21,17 @@
         private int price;
         @Setter
         private String description;
+        @Setter
+        private int quantity;
 
-        public Item() {}
 
-        public Item(String name, int price, String description) {
+        public Item(String name, int price, String description, int quantity) {
             this.name = name;
             this.price = price;
             this.description = description;
+            this.quantity = quantity;
         }
-
-        @Override
-        public String toString() {
-            return "Item{" +
-                    "id=" + id +
-                    ", name='" + name + '\'' +
-                    ", price=" + price +
-                    ", description='" + description + '\'' +
-                    '}';
-        }
-
-        @Override
-        public boolean equals(Object obj) {
-            if (obj instanceof Item item) {
-                return item.name.equals(this.name) && item.price == this.price && item.description.equals(this.description);
-            }
-            return super.equals(obj);
+        public Item(int id){
+            this.id = id;
         }
     }

@@ -20,10 +20,11 @@ public class ItemsTests {
 
     static Stream<Item> itemProvider() {
         return Stream.of(
-                new Item("Item 1", 10, "Item description 1"),
-                new Item("Item 2", 9, "Item description 2"),
-                new Item(" ", Integer.MAX_VALUE, "sigma"),
-                new Item("Item 4", 99, "Item description 4")
+                new Item("Item 1", 10, "Item description 1", 1),
+                new Item("Item 2", 9, "Item description 2", 0),
+                new Item(" ", Integer.MAX_VALUE, "sigma", 9999999),
+                new Item("Item 4", 99, "Item description 4", 2000)
+
         );
     }
 
