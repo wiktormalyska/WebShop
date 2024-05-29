@@ -4,10 +4,13 @@ import com.wiktormalyska.backend.dao.IRoleRepository;
 import com.wiktormalyska.backend.dao.IUserRepository;
 import com.wiktormalyska.backend.dao.hibernate.UserDAO;
 import com.wiktormalyska.backend.dto.UserDto;
+import com.wiktormalyska.backend.model.Cart;
 import com.wiktormalyska.backend.model.Role;
 import com.wiktormalyska.backend.model.User;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -30,25 +33,6 @@ public class UserService implements IUserService {
         return userRepository.getUser(username);
     }
 
-    @Override
-    @Transactional
-    public String registerUser(User user) {
-        if (userRepository.getUser(user.getUsername()).isPresent()) {
-            return "failure";
-        }
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        Role userRole = roleRepository.findByName("USER");
-        if (userRole != null) {
-            user.getRoles().add(userRole);
-        }
-        else {
-            Role role = new Role();
-            role.setName("USER");
-            user.getRoles().add(role);
-        }
-        userRepository.addUser(user);
-        return "success";
-    }
 
     public Collection<UserDto> getUsers(){
         Collection<UserDto> userDtos = new ArrayList<>();
@@ -83,4 +67,32 @@ public class UserService implements IUserService {
         userRepository.removeUser(user.getId());
         return "user removed successfully";
     }
+
+    @Transactional
+    public String registerUser(User user){
+        if (userRepository.getUser(user.getUsername()).isPresent()) {
+            return "failure";
+        }
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setCart(new Cart());
+        Role userRole = roleRepository.findByName("USER");
+        if (userRole != null) {
+            user.getRoles().add(userRole);
+        }
+        else {
+            Role role = new Role();
+            role.setName("USER");
+            user.getRoles().add(role);
+        }
+        userRepository.addUser(user);
+        return "success";
+    }
+
+    @Transactional
+    public User getCurrentUser() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username = ((UserDetails) principal).getUsername();
+        return userRepository.getUser(username).orElse(null);
+    }
+
 }

@@ -21,6 +21,10 @@ public class User {
     private String username;
     @Setter
     private String password;
+    @Setter
+    @OneToOne
+    @JoinColumn(name = "cart_id")
+    private Cart cart;
 
     @Getter
     @ManyToMany(fetch = FetchType.EAGER)

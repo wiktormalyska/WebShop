@@ -17,7 +17,6 @@ import java.util.Collection;
 @NoArgsConstructor
 @Repository
 public class ItemDAO implements IItemRepository {
-    private static ItemDAO instance;
     private final SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 
     @PersistenceContext
@@ -70,13 +69,6 @@ public class ItemDAO implements IItemRepository {
         } else {
             entityManager.merge(item);
         }
-    }
-
-    public static ItemDAO getInstance(){
-        if(instance == null){
-            instance = new ItemDAO();
-        }
-        return instance;
     }
 
     public ItemDAO(EntityManager entityManager) {
