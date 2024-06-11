@@ -11,5 +11,21 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ItemDto {
-    private Item item;
+    private Long id;
+    private String name;
+    private int price;
+    private String description;
+
+    public ItemDto(Item item) {
+        this.id = item.getId();
+        this.name = item.getName();
+        this.price = item.getPrice();
+        this.description = item.getDescription();
+    }
+
+    public Item toItem() {
+        return new Item(this.id, this.name, this.price, this.description);
+    }
 }
+
+

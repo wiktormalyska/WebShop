@@ -44,10 +44,19 @@ public class UserService {
     }
 
     @Transactional
+    public UserDto getUser(String username) {
+        User user = userRepository.findByUsername(username);
+        if (user != null)
+            return new UserDto(user);
+        else
+            return null;
+    }
+
+    @Transactional
     public String addUser(User user){
         String hashedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(hashedPassword);
-        User checkUser = userRepository.findById(user.getId()).stream().filter(i -> i.equals(user)).findFirst().orElse(null);
+        User checkUser = userRepository.findByUsername(user.getUsername());
         if (checkUser != null)
             return "user already exists";
         userRepository.save(user);
@@ -56,7 +65,7 @@ public class UserService {
 
     @Transactional
     public String removeUser(User user){
-        User checkUser = userRepository.findById(user.getId()).stream().filter(i -> i.equals(user)).findFirst().orElse(null);
+        User checkUser = userRepository.findByUsername(user.getUsername());
         if (checkUser == null)
             return "user does not exist";
         userRepository.deleteById(user.getId());
