@@ -1,6 +1,8 @@
     package com.wiktormalyska.backend.model;
 
+    import lombok.AllArgsConstructor;
     import lombok.Getter;
+    import lombok.NoArgsConstructor;
     import lombok.Setter;
 
     import jakarta.persistence.*;
@@ -8,18 +10,18 @@
     @Getter
     @Table(name = "items")
     @Entity
+    @NoArgsConstructor
+    @AllArgsConstructor
     public class Item {
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
-        private int id;
+        private Long id;
         @Setter
         private String name;
         @Setter
         private int price;
         @Setter
         private String description;
-
-        public Item() {}
 
         public Item(String name, int price, String description) {
             this.name = name;
