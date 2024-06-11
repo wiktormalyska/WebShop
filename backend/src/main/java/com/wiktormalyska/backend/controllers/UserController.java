@@ -55,11 +55,21 @@ public class UserController {
         }
     }
 
+    @GetMapping("/get/{username}")
+    public ResponseEntity<UserDto> getUser(@PathVariable String username) {
+        UserDto userdto = userService.getUser(username);
+        if (userdto != null) {
+            return ResponseEntity.ok(userdto);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @DeleteMapping("/remove/{userId}")
     public ResponseEntity<String> removeUser(@PathVariable Long userId) {
         UserDto userToRemove = userService.getUser(userId);
         if (userToRemove == null) return ResponseEntity.badRequest().body("user does not exist");
-        return ResponseEntity.ok(userService.removeUser(userToRemove.getUser()));
+        return ResponseEntity.ok(userService.removeUser(userToRemove.toUser()));
     }
 
 }

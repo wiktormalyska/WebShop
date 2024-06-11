@@ -1,5 +1,6 @@
     package com.wiktormalyska.backend.model;
 
+    import lombok.AllArgsConstructor;
     import lombok.Getter;
     import lombok.NoArgsConstructor;
     import lombok.Setter;
@@ -10,6 +11,7 @@
     @Table(name = "items")
     @Entity
     @NoArgsConstructor
+    @AllArgsConstructor
     public class Item {
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)

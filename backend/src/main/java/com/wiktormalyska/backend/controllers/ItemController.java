@@ -44,7 +44,7 @@ public class ItemController {
         return ResponseEntity.status(500).body("An unexpected error occurred");
     }
 
-    @PostMapping("/get/{item}")
+    @GetMapping("/get/{item}")
     public ResponseEntity<ItemDto> getItem(@PathVariable Long item) {
         ItemDto itemdto = itemService.getItem(item);
         if (itemdto != null) {
@@ -54,11 +54,12 @@ public class ItemController {
         }
 
     }
-    @PostMapping("/remove/{item}")
+    @DeleteMapping("/remove/{item}")
     public ResponseEntity<String> removeItem(@PathVariable Long item) {
-        ItemDto itemToRemove = itemService.getItem(item);
-        if (itemToRemove== null) return ResponseEntity.badRequest().body("item does not exist");
-        itemService.removeItem(itemToRemove.getItem());
+        ItemDto itemToRemoveDto = itemService.getItem(item);
+        if (itemToRemoveDto== null) return ResponseEntity.badRequest().body("item does not exist");
+        Item itemToRemove = itemToRemoveDto.toItem();
+        itemService.removeItem(itemToRemove);
         return ResponseEntity.ok("successfully removed item");
     }
 
