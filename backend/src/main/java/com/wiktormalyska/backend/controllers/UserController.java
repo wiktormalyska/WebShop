@@ -6,6 +6,7 @@ import com.wiktormalyska.backend.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
@@ -19,6 +20,7 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
+
 
 
     @GetMapping("/all")
@@ -45,8 +47,8 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred");
     }
 
-    @GetMapping("/get/{userId}")
-    public ResponseEntity<UserDto> getUser(@PathVariable Long userId) {
+    @GetMapping("/getById")
+    public ResponseEntity<UserDto> getUser(@RequestBody Long userId) {
         UserDto userdto = userService.getUser(userId);
         if (userdto != null) {
             return ResponseEntity.ok(userdto);
@@ -55,8 +57,8 @@ public class UserController {
         }
     }
 
-    @GetMapping("/get/{username}")
-    public ResponseEntity<UserDto> getUser(@PathVariable String username) {
+    @GetMapping("/getByUsername")
+    public ResponseEntity<UserDto> getUser(@RequestBody String username) {
         UserDto userdto = userService.getUser(username);
         if (userdto != null) {
             return ResponseEntity.ok(userdto);

@@ -26,11 +26,14 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http
-                .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorizeRequests ->
-                authorizeRequests
-                        .anyRequest().permitAll()
-        );
+                        authorizeRequests
+                                .requestMatchers("/api/users/**").hasRole("ADMIN")
+                                .requestMatchers("/api/items/add").hasRole("ADMIN")
+                                .requestMatchers("/api/items/remove/**").hasRole("ADMIN")
+                                .anyRequest().permitAll()
+                )
+        ;
         return http.build();
     }
 }
