@@ -45,7 +45,7 @@ public class ItemController {
     }
 
     @PostMapping("/get/{item}")
-    public ResponseEntity<ItemDto> getItem(@PathVariable int item) {
+    public ResponseEntity<ItemDto> getItem(@PathVariable Long item) {
         ItemDto itemdto = itemService.getItem(item);
         if (itemdto != null) {
             return ResponseEntity.ok(itemdto);
@@ -55,7 +55,7 @@ public class ItemController {
 
     }
     @PostMapping("/remove/{item}")
-    public ResponseEntity<String> removeItem(@PathVariable int item) {
+    public ResponseEntity<String> removeItem(@PathVariable Long item) {
         ItemDto itemToRemove = itemService.getItem(item);
         if (itemToRemove== null) return ResponseEntity.badRequest().body("item does not exist");
         itemService.removeItem(itemToRemove.getItem());
